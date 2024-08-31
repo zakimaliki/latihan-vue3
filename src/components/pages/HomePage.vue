@@ -8,17 +8,23 @@
         friends you follow.
       </p>
     </div>
-    <RecipeList/>
-
+    <RecipeList :recipes="recipes"></RecipeList>
   </div>
 </template>
 
 <script>
 import RecipeList from "../recipe/RecipeList.vue";
+import RecipeData from "../../recipe.js"
 
+// const recipeList = RECIPE_DATA
 export default {
   components: {
     RecipeList,
+  },
+  data() {
+    return {
+      recipes: RecipeData // Gunakan data JSON dari recipe.js di sini
+    };
   },
 };
 </script>
