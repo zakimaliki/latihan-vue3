@@ -4,6 +4,14 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { routes } from './routes'
+import { store } from './store/index'
+
+// Buat instance aplikasi terlebih dahulu
+const app = createApp(App)
+
+// Gunakan store
+app.use(store)
+
 const router = createRouter({
     history: createWebHistory(),
     routes,
@@ -11,6 +19,12 @@ const router = createRouter({
         return { top: 0 }
     }
 })
-createApp(App).use(router).mount('#app');
+
+// Gunakan router
+app.use(router)
+
+// Mount aplikasi
+app.mount('#app')
+
 import "bootstrap/dist/js/bootstrap.js";
 
