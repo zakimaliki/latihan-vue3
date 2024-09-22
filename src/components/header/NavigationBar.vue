@@ -6,17 +6,35 @@
     style="width: 450px"
   >
     <SearchMenu />
-    <SignupMenu />
+    <component :is="components[menuComponent]"></component>
   </div>
 </template>
 
-<script>
+<script setup>
 import SignupMenu from "./SignupMenu.vue";
 import SearchMenu from "./SearchMenu.vue";
-export default {
-  components: {
-    SignupMenu,
-    SearchMenu,
-  },
+import ProfileMenu from "./ProfileMenu.vue";
+import { computed, ref, watch } from "vue";
+import { useStore } from "vuex";
+const menuComponent = ref("signup-menu");
+const store = useStore();
+const getToken = computed(() => {
+  if (!getToken.value) {
+    menuComponent.value = "signup-menu";
+  } else {
+    menuComponent.value = "profile-menu";
+  }
+  return store.state.auth.token;
+});
+watch(getToken, (newValue, oldValue) => {
+  if (!newValue) {
+    menuComponent.value = "signup-menu";
+  } else {
+    menuComponent.value = "profile-menu";
+  }
+});
+const components = {
+  "signup-menu": SignupMenu,
+  "profile-menu": ProfileMenu,
 };
 </script>
