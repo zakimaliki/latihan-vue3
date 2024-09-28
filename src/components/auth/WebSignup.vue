@@ -16,6 +16,7 @@
               identity="lastname"
               placeholder="Ex: Daniel"
               label="Lastname"
+              v-model="signupData.lastname"
             >
             </base-input>
           </div>
@@ -25,6 +26,7 @@
               identity="firstname"
               placeholder="Ex: John"
               label="Firstname"
+              v-model="signupData.firstname"
             >
             </base-input>
           </div>
@@ -35,6 +37,7 @@
             identity="firstname"
             placeholder="Ex: Jack"
             label="Username"
+            v-model="signupData.username"
           >
           </base-input>
         </div>
@@ -44,6 +47,7 @@
             identity="email"
             placeholder="Your email address"
             label="Email"
+            v-model="signupData.email"
           >
           </base-input>
         </div>
@@ -54,13 +58,40 @@
             placeholder="Your password"
             label="Password"
             v-model="signupData.password"
+            @keyInput="passwordCheck"
+          >
+            >
+          </base-input>
+          <p
+            class="text-danger mt-1 fw-medium"
+            style="font-size: 11px"
+            :style="{ display: passwordStatusDisplay }"
+          >
+            The password field must be at least 8 characters
+          </p>
+        </div>
+        <div class="my-4">
+          <base-input
+            type="password"
+            identity="confirmationPassword"
+            placeholder="Your Confirmation Password"
+            label="Confirmation  Password"
+            v-model="signupData.confirmationPassword"
             @keyInput="confirmationPasswordCheck"
           >
           </base-input>
-          <p class="text-danger mt-1 fw-medium" style="font-size: 11px">
+          <p
+            class="text-danger mt-1 fw-medium"
+            style="font-size: 11px"
+            :style="{ display: confirmPasswordDoesNotMacth }"
+          >
             The password confirmation does not match
           </p>
-          <p class="text-success mt-1 fw-medium" style="font-size: 11px">
+          <p
+            class="text-success mt-1 fw-medium"
+            style="font-size: 11px"
+            :style="{ display: confirmPasswordMacth }"
+          >
             The password confirmation does match
           </p>
         </div>
@@ -82,30 +113,21 @@
               />
             </div>
           </base-input>
-          <p
-            class="text-danger mt-1 fw-medium"
-            style="font-size: 11px"
-            :style="{ display: confirmPasswordDoesNotMacth }"
-          >
-            The password confirmation does not match
-          </p>
-          <p
-            class="text-success mt-1 fw-medium"
-            style="font-size: 11px"
-            :style="{ display: confirmPasswordMacth }"
-          >
-            The password confirmation does match
-          </p>
         </div>
-      </form>
       <div class="text-center mt-4">
-        <p class="fw-semibold">
-          Already have account?
-          <router-link to="/login" class="text-decoration-none">
-            Login
-          </router-link>
-        </p>
+        <button type="submit" class="btn btn-primary px-5 py-2">
+          Register
+        </button>
       </div>
+      </form>
+    </div>
+    <div class="text-center mt-4">
+      <p class="fw-semibold">
+        Already have account?
+        <router-link to="/login" class="text-decoration-none">
+          Login
+        </router-link>
+      </p>
     </div>
   </div>
 </template>
@@ -117,6 +139,14 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 const confirmPasswordDoesNotMacth = ref("none");
 const confirmPasswordMacth = ref("none");
+const passwordStatusDisplay = ref("none");
+const passwordCheck = () => {
+  if (signupData.password.length < 8) {
+    passwordStatusDisplay.value = "block";
+  } else {
+    passwordStatusDisplay.value = "none";
+  }
+};
 const confirmationPasswordCheck = () => {
   if (signupData.confirmationPassword === "") {
     confirmPasswordDoesNotMacth.value = "none";

@@ -4,8 +4,7 @@
       {{ label }} <span style="color: #cb3a31">*</span>
     </label>
     <input
-      class="form-control"
-      :type="type"
+    :class="[{ 'd-none': isImage}, 'form-control']"      :type="type"
       :id="identity"
       :placeholder="placeholder"
       :readonly="readonly === '1'"
