@@ -20,8 +20,7 @@ export default {
     actions: {
         async getRecipeData({ commit }) {
             try {
-                const { data } = await axios.get(
-                    "https://vue-js-project-feed8-default-rtdb.firebaseio.com/recipes.json")
+                const { data } = await axios.get("https://vue-js-project-feed8-default-rtdb.firebaseio.com/recipes.json")
                 const arr = []
                 for (let key in data) {
                     arr.push({ id: key, ...data[key] })
